@@ -1,8 +1,6 @@
-import * as app from 'express';
-import { UserModel } from './models';
+import { Router } from "express";
 
-const server = app();
-const router = app.Router();
+const router = Router();
 
 
 router.get('/user', async (req, res) => {

@@ -1,13 +1,15 @@
 FROM node:20-alpine
 
-WORKDIR /api
+WORKDIR /api 
 
-COPY package*.json ./
+COPY package.json ./ 
 
-RUN npm install
+COPY yarn.lock ./
+
+RUN yarn
 
 EXPOSE ${API_PORT}
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD ["yarn", "dev"]

@@ -1,11 +1,15 @@
-import * as app from 'express';
-import { UserModel } from './models';
+import { Request, Response } from "express";
+import { HTTP_STATUS } from "../utils/httpStatus";
 
-const server = app();
-const router = app.Router();
+export default class UserController {
+   constructor(
+
+   ) {}
 
 
-router.get('/user', async (req, res) => {
+
+
+ getUsers = async (req: Request, res: Response) => {
   const { page, limit } = req.query;
 
   const [users, total] = await Promise.all([
@@ -21,19 +25,19 @@ router.get('/user', async (req, res) => {
   });
 });
 
-router.get('/users/:id', async (req, res) => {
+getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   const user = await UserModel.findOne({ _id: id }).lean();
 
   if (!user) {
-    res.status(STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Region not found' });
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Region not found' });
   }
 
   return user;
 });
 
-router.put('/users/:id', async (req, res) => {
+updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { update } = req.body;
 
@@ -50,6 +54,4 @@ router.put('/users/:id', async (req, res) => {
   return res.sendStatus(201);
 });
 
-server.use(router);
-
-export default server.listen(3003);
+}
