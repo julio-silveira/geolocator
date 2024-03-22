@@ -1,11 +1,8 @@
 import mongoose from 'mongoose';
+import { env } from "../config";
 
-const env = {
-  MONGO_URI: 'mongodb://root:example@127.0.0.1:27021/oz-tech-test?authSource=admin',
-};
-
-const init = async function() {
+const initDatabase = async function() {
   await mongoose.connect(env.MONGO_URI);
 };
 
-export default init();
+export default initDatabase();

@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import * as mongoose from 'mongoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { pre, getModelForClass, Prop, Ref, modelOptions } from '@typegoose/typegoose';
-import lib from './services/lib';
+import lib from './utils/lib';
 
 import ObjectId = mongoose.Types.ObjectId;
 
