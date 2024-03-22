@@ -1,57 +1,50 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../utils/httpStatus";
+import UserService from "../services/user.service";
 
 export default class UserController {
    constructor(
-
+    private readonly userService: UserService,
    ) {}
-
-
-
 
  getUsers = async (req: Request, res: Response) => {
   const { page, limit } = req.query;
 
-  const [users, total] = await Promise.all([
-    UserModel.find().lean(),
-    UserModel.count(),
+  const [
+    users,
+    total,
+  ] = await Promise.all([
+    this.userService.getUsers(),
+    this.userService.getUsersCount(),
   ]);
 
+  
   return res.json({
     rows: users,
     page,
     limit,
-    total,
+    total
   });
-});
+}
 
 getUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
-  const user = await UserModel.findOne({ _id: id }).lean();
-
+  const user = await this.userService.getUser(id);
   if (!user) {
     res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ message: 'Region not found' });
   }
 
   return user;
-});
+}
 
 updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { update } = req.body;
 
-  const user = await UserModel.findOne({ _id: id }).lean();
-
-  if (!user) {
-    res.status(STATUS.DEFAULT_ERROR).json({ message: 'Region not found' });
-  }
-
-  user.name = update.name;
-
-  await user.save();
+  await this.userService.updateUser(id, update);
 
   return res.sendStatus(201);
-});
+}
 
 }
