@@ -3,14 +3,11 @@ import 'reflect-metadata';
 import * as mongoose from 'mongoose';
 import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses';
 import { pre, getModelForClass, Prop, Ref, modelOptions } from '@typegoose/typegoose';
-import lib from './lib';
-
+import Base from "./base.model";
 import ObjectId = mongoose.Types.ObjectId;
+import lib from "../utils/lib";
+import { Region } from "../models";
 
-class Base extends TimeStamps {
-  @Prop({ required: true, default: () => (new ObjectId()).toString() })
-  _id: string;
-}
 
 @pre<User>('save', async function (next) {
   const region = this as Omit<any, keyof User> & User;
@@ -25,6 +22,7 @@ class Base extends TimeStamps {
 
   next();
 })
+
 export class User extends Base {
   @Prop({ required: true })
   name!: string;
@@ -42,32 +40,5 @@ export class User extends Base {
   regions: Ref<Region>[];
 }
 
-@pre<Region>('save', async function (next) {
-  const region = this as Omit<any, keyof Region> & Region;
-
-  if (!region._id) {
-    region._id = new ObjectId().toString();
-  }
-
-  if (region.isNew) {
-    const user = await UserModel.findOne({ _id: region.user });
-    user.regions.push(region._id);
-    await user.save({ session: region.$session() });
-  }
-
-  next(region.validateSync());
-})
-@modelOptions({ schemaOptions: { validateBeforeSave: false } })
-export class Region extends Base {
-  @Prop({ required: true, auto: true })
-  _id: string;
-
-  @Prop({ required: true })
-  name!: string;
-
-  @Prop({ ref: () => User, required: true, type: () => String })
-  user: Ref<User>;
-}
 
 export const UserModel = getModelForClass(User);
-export const RegionModel = getModelForClass(Region);
