@@ -10,10 +10,8 @@ class GeoLib {
         const isArray = Array.isArray(coordinates)
         const lat = isArray ? coordinates[1] : coordinates.lat
         const lon = isArray ? coordinates[0] : coordinates.lng
-        console.log(lat, lon)
         try {
             const address = await this.geocoder.reverse({ lat, lon })
-            console.log(address)
             if (!address.length) {
                 throw new BadRequestError(
                     'Unable to get address from sent coordinates'

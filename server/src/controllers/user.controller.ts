@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import { HTTP_STATUS } from '../utils/httpStatus'
 import UserService from '../services/user.service'
 import { zodParser } from '../utils/ZodParser'
-import { createUserSchema } from '../schemas/user.schemas'
+import { createUserSchema, updateUserSchema } from '../schemas/user.schemas'
 
 export default class UserController {
     constructor(private readonly userService: UserService) {}
@@ -11,7 +11,7 @@ export default class UserController {
         const { body } = await zodParser(createUserSchema, req)
         const newUser = await this.userService.createUser(body)
 
-        return res.json(newUser)
+        return res.status(HTTP_STATUS.CREATED).json(newUser)
     }
 
     getUsers = async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ export default class UserController {
             this.userService.getUsersCount(),
         ])
 
-        return res.json({
+        return res.status(HTTP_STATUS.OK).json({
             rows: users,
             page,
             limit,
@@ -44,11 +44,10 @@ export default class UserController {
     }
 
     updateUser = async (req: Request, res: Response) => {
-        const { id } = req.params
-        const { update } = req.body
+      const { body, params:{id} } = await zodParser(updateUserSchema, req)
 
-        await this.userService.updateUser(id, update)
+        const user = await this.userService.updateUser(id, body)
 
-        return res.sendStatus(201)
+        return res.status(HTTP_STATUS.CREATED).json(user)
     }
 }

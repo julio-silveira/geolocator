@@ -14,9 +14,7 @@ const errorMiddleware = (
             error: error.error,
         })
     }
-    const errorMessage = `
-  ${req.method} ${req.path} - ${error}
-  `
+
     console.error(error)
     return res.status(500).json({
         message: error.message,

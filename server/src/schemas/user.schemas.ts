@@ -1,3 +1,4 @@
+import mongoose from "mongoose"
 import { z } from 'zod'
 
 export const userSchema = z
@@ -23,12 +24,15 @@ export const createUserSchema = z.object({
 
 export const updateUserSchema = z.object({
     params: z.object({
-        id: z.string().uuid(),
+        id: z.string().refine((data) => mongoose.Types.ObjectId.isValid(data), {
+          message: 'Invalid id',
+        }),
     }),
     body: userSchema.optional(),
 })
 
 export type UserSchema = z.infer<typeof userSchema>
+
 
 export type CreateUserSchema = z.infer<typeof createUserSchema>
 

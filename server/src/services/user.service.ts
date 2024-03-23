@@ -1,3 +1,4 @@
+import { NotFoundError } from "../errors/NotFoundError"
 import { UserModel } from '../models'
 import { UserSchema } from '../schemas/user.schemas'
 
@@ -8,11 +9,11 @@ export default class UserService {
         const newUser = await this.userModel.create({
             name: data.name,
             email: data.email,
-            address: data.address,
-            coordinates: [
-                data.coordinates.longitude,
-                data.coordinates.latitude,
-            ],
+            address: data?.address,
+            coordinates: data.coordinates ? [
+                data?.coordinates?.longitude,
+                data?.coordinates?.latitude,
+            ] : undefined,
         })
         return newUser
     }
@@ -35,14 +36,30 @@ export default class UserService {
         return user
     }
 
-    public async updateUser(id: string, update: any) {
+    public async updateUser(id: string, data: UserSchema) {
         const user = await this.userModel.findOne({ _id: id })
 
         if (!user) {
-            return null
+            throw new NotFoundError('User not found')
         }
 
-        user.name = update.name
+        if (data?.address) {
+            user.address = data.address
+        }
+        if (data.coordinates) {
+            user.coordinates = [
+                data.coordinates.longitude,
+                data.coordinates.latitude,
+            ]
+        }
+
+        if (data?.email) {
+            user.email = data.email
+        }
+
+        if (data?.name) {
+            user.name = data.name
+        }
 
         await user.save()
 
