@@ -1,4 +1,5 @@
 import { UserModel } from "../models";
+import { UserSchema } from "../schemas/users/create-user.schema";
 
 
 export default class UserService {
@@ -7,7 +8,7 @@ export default class UserService {
   ) {}
 
 
-  public async createUser(data: any) {
+  public async createUser(data: UserSchema) {
     const newUser = await this.userModel.create(data);
     return newUser;
   }

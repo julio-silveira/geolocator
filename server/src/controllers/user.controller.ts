@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { HTTP_STATUS } from "../utils/httpStatus";
 import UserService from "../services/user.service";
+import { zodParser } from "../utils/ZodParser";
+import { createUserSchema } from "../schemas/users/create-user.schema";
 
 export default class UserController {
    constructor(
@@ -8,7 +10,8 @@ export default class UserController {
    ) {}
   
 createUser = async (req: Request, res: Response) => {
-  const {body} = req;
+
+  const { body } = await zodParser(createUserSchema, req.body);
   console.log(body);
   const newUser = await this.userService.createUser(body);
 
