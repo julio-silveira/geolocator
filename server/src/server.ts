@@ -1,6 +1,16 @@
-import * as app from 'express';
-import router from './routes';
-const server = app();
-server.use(router);
+import mongoose from "mongoose";
+import app from "./app";
+import { env } from "./config";
 
-export default server.listen(3003);
+async function startServer() {
+  console.log("Starting server...");
+  await mongoose.connect(env.MONGO_URI);
+  console.log("Connected to database"); 
+
+  app.listen(env.PORT, () => {
+    console.log(`Server is running on port ${env.PORT}`);
+  });
+} 
+
+
+startServer();

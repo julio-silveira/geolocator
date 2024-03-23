@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { UserModel } from "../models";
 import UserService from "../services/user.service";
 import UserController from "../controllers/user.controller";
+import { UserModel } from "../models";
 
 const router = Router();
 
@@ -10,7 +10,7 @@ const service = new UserService(model);
 const controller = new UserController(service);
 
 
-router.get('/user', controller.getUsers);
+router.get('/users', controller.getUsers);
 
 router.get('/users/:id', controller.getUser);
 

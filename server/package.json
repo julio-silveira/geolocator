@@ -4,7 +4,7 @@
   "description": "geolocator",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.ts",
+    "dev": "nodemon src/server.ts",
     "test": "mocha --require ts-node/register ./src/**/*.spec.ts --exit"
   },
   "author": "",
@@ -13,6 +13,7 @@
     "@faker-js/faker": "^8.1.0",
     "@typegoose/typegoose": "^11.5.0",
     "chai": "^4.3.10",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "mongoose": "^7.5.3"
   },

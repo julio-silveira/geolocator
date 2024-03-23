@@ -3,7 +3,7 @@ import { UserModel } from "../models";
 
 export default class UserService {
   constructor(
-    private readonly userModel: typeof UserModel,
+    private readonly userModel: typeof UserModel ,
   ) {}
 
 

@@ -1,10 +1,8 @@
-import { UserModel, User } from "./user.model";
-import { RegionModel, Region } from "./region.model";
+import { getModelForClass } from "@typegoose/typegoose";
+import { Region } from "./region.model";
+import { User } from "./user.model";
 
 
-export {
-  UserModel,
-  User,
-  RegionModel,
-  Region
-}
+export const UserModel = getModelForClass(User);
+export const RegionModel = getModelForClass(Region);
+
