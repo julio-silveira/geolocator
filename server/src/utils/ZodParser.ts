@@ -13,7 +13,6 @@ export async function zodParser<T extends AnyZodObject>(
 		return parsedData;
 	} catch (error) {
 		if (error instanceof ZodError) {
-			console.log(error.errors);
 			const errors = error.errors.map((err) => ({
 				message: err.message,
 				path: err.path.join("."),

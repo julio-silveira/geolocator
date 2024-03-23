@@ -1,4 +1,5 @@
 import node_geocoder from "node-geocoder";
+import { BadRequestError } from "../errors/BadRequestError";
 
 class GeoLib {
   constructor(
@@ -6,19 +7,26 @@ class GeoLib {
   ) {}
 
   public async getAddressFromCoordinates(coordinates: [number, number] | { lat: number; lng: number }): Promise<string> {
-    const address = await this.geocoder.reverse({ lat: coordinates[1], lon: coordinates[0] });
-
-    if (!address.length) {
-      throw new Error('Address not found');
+    const isArray = Array.isArray(coordinates);
+    const lat =  isArray ? coordinates[1] : coordinates.lat;
+    const lon =  isArray ? coordinates[0] : coordinates.lng;
+    console.log(lat, lon);
+    try{
+      const address = await this.geocoder.reverse({ lat, lon }); 
+      console.log(address);
+      if (!address.length) {
+        throw new BadRequestError('Unable to get address from sent coordinates');
+      }
+      return address[0].formattedAddress;
+    } catch (error) {
+      throw new BadRequestError('Unable to get address from sent coordinates');
     }
-
-    return address[0].formattedAddress;
   };
 
   public async getCoordinatesFromAddress(address: string): Promise<{ lat: number; lng: number }> {
     const coordinates = await this.geocoder.geocode(address);
     if (!coordinates.length) {
-      throw new Error('Address not found');
+      throw new BadRequestError('Address not found');
     }
 
     const firstCoordinates = coordinates[0];

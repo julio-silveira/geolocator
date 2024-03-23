@@ -9,7 +9,13 @@ export default class UserService {
 
 
   public async createUser(data: UserSchema) {
-    const newUser = await this.userModel.create(data);
+    const newUser = await this.userModel.create({
+      name: data.name,
+      email: data.email,
+      address: data.address,
+      coordinates: [data.coordinates.longitude, data.coordinates.latitude],
+    
+    });
     return newUser;
   }
 

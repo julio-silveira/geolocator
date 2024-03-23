@@ -9,19 +9,18 @@ import { Region } from "./region.model";
 import Base from "./base.model";
 
 @pre<User>('save', async function (next) {
-  const region = this as Omit<any, keyof User> & User;
+  const user = this as Omit<any, keyof User> & User;
+  if (user.isModified('coordinates')) {
+    user.address = await lib.getAddressFromCoordinates(user.coordinates);
+  } else if (user.isModified('address')) {
+    const { lat, lng } = await lib.getCoordinatesFromAddress(user.address);
 
-  if (region.isModified('coordinates')) {
-    region.address = await lib.getAddressFromCoordinates(region.coordinates);
-  } else if (region.isModified('address')) {
-    const { lat, lng } = await lib.getCoordinatesFromAddress(region.address);
-
-    region.coordinates = [lng, lat];
+    user.coordinates = [lng, lat];
   }
 
   next();
 })
-
+@modelOptions({ schemaOptions: { validateBeforeSave: false } })
 export class User extends Base {
   @Prop({ required: true })
   name!: string;

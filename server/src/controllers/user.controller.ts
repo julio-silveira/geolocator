@@ -12,7 +12,6 @@ export default class UserController {
 createUser = async (req: Request, res: Response) => {
 
   const { body } = await zodParser(createUserSchema, req);
-  console.log(body);
   const newUser = await this.userService.createUser(body);
 
   return res.json(newUser);
