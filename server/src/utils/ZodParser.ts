@@ -1,5 +1,8 @@
-import type { Request } from "express";
+import type { Request, Response, NextFunction } from "express";
+import { STATUS_CODES } from "http";
 import { AnyZodObject, ZodError, z } from "zod";
+import { BaseError } from "../errors/BaseError";
+import { HTTP_STATUS } from "./httpStatus";
 
 export async function zodParser<T extends AnyZodObject>(
 	schema: T,
@@ -10,8 +13,23 @@ export async function zodParser<T extends AnyZodObject>(
 		return parsedData;
 	} catch (error) {
 		if (error instanceof ZodError) {
-			throw new Error(error.errors.map((err) => err.message).join(", "));
+			console.log(error.errors);
+			const errors = error.errors.map((err) => ({
+				message: err.message,
+				path: err.path.join("."),
+			}));
+			throw new BaseError({
+				message: "Validation failed",
+				statusCode: HTTP_STATUS.UNPROCESSABLE_ENTITY,
+				errorCode: "validation_error",
+				error: errors ,
+			});
 		}
-		throw error;
+		throw new BaseError({
+			message: "Internal server error",
+			statusCode: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+			errorCode: "internal_server_error",
+			error: {},
+		});
 	}
 }

@@ -8,16 +8,7 @@ export const userSchema = z.object({
     latitude: z.number(),
     longitude: z.number()
   }).optional(),
-}).refine(data => {
-  if (!data?.address && !data?.coordinates) {
-    return false;
-  }
-}, "You need provide address or coordinates")
-.refine(data => {
-  if (data?.address && data?.coordinates) {
-    return false;
-  }
-}, "You need provide address or coordinates, never both")
+}).refine(data => !!data?.address !== !!data?.coordinates, "You need provide address OR coordinates")
 
 
 export const createUserSchema = z.object({
