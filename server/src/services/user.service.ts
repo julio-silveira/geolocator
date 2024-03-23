@@ -8,7 +8,8 @@ export default class UserService {
 
 
   public async createUser(data: any) {
-    return await this.userModel.create(data);
+    const newUser = await this.userModel.create(data);
+    return newUser;
   }
 
 
@@ -30,6 +31,7 @@ export default class UserService {
     return user;
   }
 
+ 
 
   public async updateUser(id: string, update: any) {
     const user = await this.userModel.findOne({ _id: id });

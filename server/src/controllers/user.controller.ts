@@ -6,6 +6,15 @@ export default class UserController {
    constructor(
     private readonly userService: UserService,
    ) {}
+  
+createUser = async (req: Request, res: Response) => {
+  const {body} = req;
+  console.log(body);
+  const newUser = await this.userService.createUser(body);
+
+  return res.json(newUser);
+
+}
 
  getUsers = async (req: Request, res: Response) => {
   const { page, limit } = req.query;
