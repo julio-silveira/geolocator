@@ -17,7 +17,7 @@ export default class RegionService {
     }
 
     public async getAll() {
-        const regions = await this.regionModel.find().lean()
+        const regions = await this.regionModel.find()
 
         return regions
     }
@@ -29,7 +29,7 @@ export default class RegionService {
     }
 
     public async getOne(id: string) {
-        const region = await this.regionModel.findOne({ _id: id }).lean()
+        const region = await this.regionModel.findOne({ _id: id })
 
         return region
     }
@@ -50,7 +50,7 @@ export default class RegionService {
                     },
                 },
             },
-        }).populate('user')
+        })
 
         return regions
     }

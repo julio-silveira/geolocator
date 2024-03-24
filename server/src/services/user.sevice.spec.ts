@@ -119,17 +119,18 @@ describe('UserService', () => {
         userModelMock.restore()
     })
 
-
     it('should delete a user by ID', async () => {
-      const { savedUser } = buildNewUser();
-      const userModelMock = sinon.mock(UserModel);
-      userModelMock.expects('deleteOne').resolves({ deletedCount: 1 });
+        const { savedUser } = buildNewUser()
+        const userModelMock = sinon.mock(UserModel)
+        userModelMock.expects('deleteOne').resolves({ deletedCount: 1 })
 
-      const userService = new UserService(UserModel);
-      const deletedUser = await userService.deleteUser(savedUser._id.toString());
+        const userService = new UserService(UserModel)
+        const deletedUser = await userService.deleteUser(
+            savedUser._id.toString()
+        )
 
-      expect(deletedUser).to.deep.equal({ deletedCount: 1 });
-      userModelMock.verify();
-      userModelMock.restore();
-  })
+        expect(deletedUser).to.deep.equal({ deletedCount: 1 })
+        userModelMock.verify()
+        userModelMock.restore()
+    })
 })
