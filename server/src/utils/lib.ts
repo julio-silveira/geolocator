@@ -1,7 +1,7 @@
 import node_geocoder from 'node-geocoder'
 import { BadRequestError } from '../errors/BadRequestError'
 
-class GeoLib {
+export class GeoLib {
     constructor(private readonly geocoder: node_geocoder.Geocoder) {}
 
     public async getAddressFromCoordinates(
