@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 import supertest from 'supertest'
 import { GeoLib } from '../utils/lib'
 import app from '../app'
-import { createUserOnDatabase } from './testUtils'
+import { createFakeCoordinates, createUserOnDatabase } from './testUtils'
 import { MongoMemoryServer } from 'mongodb-memory-server'
 
 chai.use(sinonChai)
@@ -96,6 +96,8 @@ describe('Testing users route', function () {
     })
 
     it('POST /users', async function () {
+        const coordinates = createFakeCoordinates()
+
         const newUser = {
             name: faker.person.fullName(),
             email: faker.internet.email(),

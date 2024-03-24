@@ -9,6 +9,7 @@ import {
     getRegionsByPointSchema,
     updateRegionSchema,
 } from '../schemas/region.schema'
+import { NotFoundError } from "../errors/NotFoundError"
 
 export default class RegionController {
     constructor(private readonly regionService: RegionService) {}
@@ -43,7 +44,7 @@ export default class RegionController {
         const region = await this.regionService.getOne(id)
 
         if (!region) {
-            throw new BadRequestError('Region not found')
+            throw new NotFoundError('Region not found')
         }
 
         return res.status(HTTP_STATUS.OK).json(region)
@@ -93,7 +94,7 @@ export default class RegionController {
         const isRegisteredRegion = await this.regionService.getOne(id)
 
         if (!isRegisteredRegion) {
-            throw new BadRequestError('Region not found')
+            throw new NotFoundError('Region not found')
         }
 
         const region = await this.regionService.update(id, body)
