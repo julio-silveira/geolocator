@@ -30,7 +30,7 @@ export class Region extends Base {
     @Prop({ required: true })
     type: string
 
-    @Prop({ required: true, type: () => [[Number]]})
+    @Prop({ required: true, type: () => [[Number]], index: '2dsphere'})
     coordinates: number[][]
 
     @Prop({ ref: () => User, required: true, type: () => String })

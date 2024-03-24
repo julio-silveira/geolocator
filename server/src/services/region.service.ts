@@ -27,6 +27,21 @@ export default class RegionService {
         return region
     }
 
+    public async getByPoint({ latitude, longitude }: { latitude: number, longitude: number} ) {
+      const regions = await RegionModel.find({
+        coordinates: {
+          $geoIntersects: {
+            $geometry: {
+              type: 'Point',
+              coordinates: [longitude, latitude],
+            },
+          },
+        },
+      }).populate('user');
+
+        return regions
+    }
+
     public async update(id: string, data: RegionSchema) {
         const region = await this.regionModel.findOne({ _id: id })
         if (data?.name) {

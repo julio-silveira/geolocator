@@ -34,6 +34,20 @@ export const regionSchema = z.object({
     user: zObjectId,
 })
 
+export const getRegionsByPointSchema = z.object({
+    query: z.object({
+        longitude: z.coerce.number({
+          required_error: 'Longitude is required',
+          invalid_type_error: 'Longitude must be a number',
+        }).min(-180).max(180),
+        latitude: z.coerce.number({
+          required_error: 'Latitude is required',
+          invalid_type_error: 'Latitude must be a number',
+        }).min(-90).max(90),
+    }),
+})
+
+
 export const createRegionSchema = z.object({
     body: regionSchema,
 })
@@ -44,6 +58,8 @@ export const updateRegionSchema = z.object({
 })
 
 export type RegionSchema = z.infer<typeof regionSchema>
+
+export type GetRegionsByPointSchema = z.infer<typeof getRegionsByPointSchema>
 
 export type CreateRegionSchema = z.infer<typeof createRegionSchema>
 
