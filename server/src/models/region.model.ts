@@ -1,11 +1,12 @@
 import 'reflect-metadata'
 
 import * as mongoose from 'mongoose'
-import { pre, Prop, Ref, modelOptions } from '@typegoose/typegoose'
+import { pre, Prop, Ref, modelOptions, prop } from '@typegoose/typegoose'
 import ObjectId = mongoose.Types.ObjectId
 import Base from './base.model'
 import { User } from './user.model'
 import { UserModel } from '.'
+import GeoJSON from './schemas/geo-json.schema'
 
 @pre<Region>('save', async function (next) {
     const region = this as Omit<any, keyof Region> & Region
@@ -24,15 +25,15 @@ import { UserModel } from '.'
 })
 @modelOptions({ schemaOptions: { validateBeforeSave: false } })
 export class Region extends Base {
-    @Prop({ required: true })
+    @prop({ required: true })
     name!: string
 
-    @Prop({ required: true })
-    type: string
+    @prop({ type: () => GeoJSON, index: '2dsphere', required: true })
+    location!: {
+        type: 'Polygon'
+        coordinates: number[][][]
+    }
 
-    @Prop({ required: true, type: () => [[Number]], index: '2dsphere'})
-    coordinates: number[][]
-
-    @Prop({ ref: () => User, required: true, type: () => String })
+    @prop({ ref: () => User, required: true, type: () => String })
     user: Ref<User>
 }

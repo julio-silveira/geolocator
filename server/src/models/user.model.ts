@@ -1,17 +1,16 @@
 import 'reflect-metadata'
 
-import * as mongoose from 'mongoose'
 import { pre, Prop, Ref, modelOptions } from '@typegoose/typegoose'
-import ObjectId = mongoose.Types.ObjectId
 import lib from '../utils/lib'
 import { Region } from './region.model'
 import Base from './base.model'
 
 @pre<User>('save', async function (next) {
     const user = this as Omit<any, keyof User> & User
-    if (user.isModified('coordinates')) {
+    if (user?.coordinates && user.isModified('coordinates')) {
         user.address = await lib.getAddressFromCoordinates(user.coordinates)
     } else if (user.isModified('address')) {
+        console.log(user)
         const { lat, lng } = await lib.getCoordinatesFromAddress(user.address)
 
         user.coordinates = [lng, lat]
@@ -30,7 +29,7 @@ export class User extends Base {
     @Prop({ required: true })
     address: string
 
-    @Prop({ required: true, type: () => [Number] })
+    @Prop({ required: true, type: () => [Number], index: '2dsphere' })
     coordinates: [number, number]
 
     @Prop({

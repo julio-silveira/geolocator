@@ -34,7 +34,6 @@ class GeoLib {
         }
 
         const firstCoordinates = coordinates[0]
-
         return {
             lat: firstCoordinates?.latitude,
             lng: firstCoordinates?.longitude,

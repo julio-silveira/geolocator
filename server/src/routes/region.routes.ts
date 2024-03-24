@@ -13,6 +13,8 @@ const basePath = '/regions'
 
 router.get(`${basePath}/by-point`, controller.getByPoint)
 
+router.get(`${basePath}/by-distance`, controller.getByDistance)
+
 router.get(basePath, controller.getAll)
 
 router.post(basePath, controller.create)
@@ -20,7 +22,5 @@ router.post(basePath, controller.create)
 router.get(`${basePath}/:id`, controller.getOne)
 
 router.put(`${basePath}/:id`, controller.update)
-
-
 
 export default router

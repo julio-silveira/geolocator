@@ -4,7 +4,7 @@ import UserService from '../services/user.service'
 import { zodParser } from '../utils/ZodParser'
 import { createUserSchema, updateUserSchema } from '../schemas/user.schemas'
 import { BadRequestError } from '../errors/BadRequestError'
-import { NotFoundError } from "../errors/NotFoundError"
+import { NotFoundError } from '../errors/NotFoundError'
 
 export default class UserController {
     constructor(private readonly userService: UserService) {}
@@ -45,7 +45,7 @@ export default class UserController {
         const user = await this.userService.getUser(id)
 
         if (!user) {
-           throw new NotFoundError('User not found')
+            throw new NotFoundError('User not found')
         }
 
         return res.status(HTTP_STATUS.OK).json(user)

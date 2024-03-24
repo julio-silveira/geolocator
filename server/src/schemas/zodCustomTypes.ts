@@ -23,4 +23,3 @@ export const zCoordinateArray = z
             data[1] <= 90,
         'Longitude(first position) must be between -180 and 180, Latitude(second position) must be between -90 and 90'
     )
-

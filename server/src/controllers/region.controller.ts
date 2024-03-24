@@ -5,6 +5,7 @@ import { BadRequestError } from '../errors/BadRequestError'
 import RegionService from '../services/region.service'
 import {
     createRegionSchema,
+    getByDistanceSchema,
     getRegionsByPointSchema,
     updateRegionSchema,
 } from '../schemas/region.schema'
@@ -49,7 +50,9 @@ export default class RegionController {
     }
 
     getByPoint = async (req: Request, res: Response) => {
-        const { query: {latitude, longitude} } = await zodParser(getRegionsByPointSchema, req)
+        const {
+            query: { latitude, longitude },
+        } = await zodParser(getRegionsByPointSchema, req)
 
         const region = await this.regionService.getByPoint({
             latitude,
@@ -58,6 +61,24 @@ export default class RegionController {
 
         if (!region) {
             throw new BadRequestError('Not found regions with this point')
+        }
+
+        return res.status(HTTP_STATUS.OK).json(region)
+    }
+
+    getByDistance = async (req: Request, res: Response) => {
+        const {
+            query: { latitude, longitude, distance, userToExclude },
+        } = await zodParser(getByDistanceSchema, req)
+        const region = await this.regionService.getByDistance({
+            latitude,
+            longitude,
+            distance,
+            userToExclude,
+        })
+
+        if (!region) {
+            throw new BadRequestError('Not found regions with this distance')
         }
 
         return res.status(HTTP_STATUS.OK).json(region)
