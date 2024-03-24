@@ -17,12 +17,13 @@ export default class UserService {
     }
 
     public async getUserByEmail(email: string) {
-        const user = await this.userModel.findOne({ email }).lean()
+        const user = await this.userModel.findOne({ email })
+
         return user
     }
 
     public async getUsers() {
-        const users = await this.userModel.find().lean()
+        const users = await this.userModel.find()
 
         return users
     }
@@ -34,7 +35,7 @@ export default class UserService {
     }
 
     public async getUser(id: string) {
-        const user = await this.userModel.findOne({ _id: id }).lean()
+        const user = await this.userModel.findOne({ _id: id })
 
         return user
     }

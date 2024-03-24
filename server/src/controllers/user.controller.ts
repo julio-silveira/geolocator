@@ -88,4 +88,3 @@ export default class UserController {
         return res.status(HTTP_STATUS.NO_CONTENT).send()
     }
 }
-
