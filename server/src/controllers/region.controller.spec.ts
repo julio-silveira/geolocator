@@ -1,7 +1,6 @@
 import { expect } from 'chai'
 import sinon from 'sinon'
 import { Request, Response } from 'express'
-import { BadRequestError } from '../errors/BadRequestError'
 import RegionController from './region.controller'
 import { faker } from '@faker-js/faker'
 
