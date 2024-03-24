@@ -7,7 +7,8 @@ export const regionSchema = z.object({
         invalid_type_error: 'Region type must be Polygon',
     }),
     coordinates: z
-        .array(zCoordinateArray)
+        .array(
+        z.array(zCoordinateArray)
         .min(4, 'Polygons must have at least four coordinates')
         .refine(
             (value) => {
@@ -41,7 +42,7 @@ export const regionSchema = z.object({
                 message:
                     'Coordinates must not have duplicates, except for the first and last coordinates',
             }
-        ),
+        )),
     user: zObjectId,
 })
 

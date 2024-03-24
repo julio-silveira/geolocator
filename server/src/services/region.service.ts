@@ -8,8 +8,8 @@ export default class RegionService {
         const newRegion = await this.regionModel.create({
             name: data.name,
             location: {
-                type: 'Polygon',
-                coordinates: [data.coordinates],
+                type: data.type,
+                coordinates: data.coordinates,
             },
             user: data.user,
         })
@@ -88,6 +88,13 @@ export default class RegionService {
         const region = await this.regionModel.findOne({ _id: id })
         if (data?.name) {
             region.name = data.name
+        }
+
+        if (data?.coordinates) {
+            region.location = {
+                type: data.type,
+                coordinates: data.coordinates,
+            }
         }
 
         await region.save()
