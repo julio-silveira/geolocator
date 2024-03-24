@@ -73,4 +73,19 @@ export default class UserController {
 
         return res.status(HTTP_STATUS.CREATED).json(user)
     }
+
+    delete = async (req: Request, res: Response) => {
+        const { id } = req.params
+
+        const user = await this.userService.getUser(id)
+
+        if (!user) {
+            throw new NotFoundError('User not found')
+        }
+
+        await this.userService.deleteUser(id)
+
+        return res.status(HTTP_STATUS.NO_CONTENT).send()
+    }
 }
+

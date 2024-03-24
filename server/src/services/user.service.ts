@@ -63,4 +63,9 @@ export default class UserService {
 
         return user
     }
+
+    public async deleteUser(id: string) {
+        const user = await this.userModel.deleteOne({ _id: id })
+        return user
+    }
 }

@@ -23,4 +23,6 @@ router.get(`${basePath}/:id`, controller.getOne)
 
 router.put(`${basePath}/:id`, controller.update)
 
+router.delete(`${basePath}/:id`, controller.delete)
+
 export default router

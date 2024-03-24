@@ -100,4 +100,18 @@ export default class RegionController {
 
         return res.status(HTTP_STATUS.CREATED).json(region)
     }
+
+    delete = async (req: Request, res: Response) => {
+        const { id } = req.params
+
+        const region = await this.regionService.getOne(id)
+
+        if (!region) {
+            throw new BadRequestError('Region not found')
+        }
+
+        await this.regionService.delete(id)
+
+        return res.status(HTTP_STATUS.NO_CONTENT).send()
+    }
 }

@@ -101,4 +101,8 @@ export default class RegionService {
 
         return region
     }
+
+    async delete(id: string) {
+        await this.regionModel.deleteOne({ _id: id })
+    }
 }
