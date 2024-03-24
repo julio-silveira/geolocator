@@ -1,16 +1,11 @@
-import mongoose from 'mongoose'
 import { z } from 'zod'
+import { zCoordinateObject, zObjectId } from './zodCustomTypes'
 
 export const userSchema = z.object({
     name: z.string().min(2).max(255),
     email: z.string().email(),
     address: z.string().min(2).max(255).optional(),
-    coordinates: z
-        .object({
-            latitude: z.number().min(-90).max(90),
-            longitude: z.number().min(-180).max(180),
-        })
-        .optional(),
+    coordinates: zCoordinateObject.optional(),
 })
 
 export const createUserSchema = z.object({
@@ -22,9 +17,7 @@ export const createUserSchema = z.object({
 
 export const updateUserSchema = z.object({
     params: z.object({
-        id: z.string().refine((data) => mongoose.Types.ObjectId.isValid(data), {
-            message: 'Invalid id',
-        }),
+        id: zObjectId,
     }),
     body: userSchema
         .partial()

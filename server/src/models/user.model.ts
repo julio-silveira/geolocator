@@ -1,14 +1,7 @@
 import 'reflect-metadata'
 
 import * as mongoose from 'mongoose'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import {
-    pre,
-    getModelForClass,
-    Prop,
-    Ref,
-    modelOptions,
-} from '@typegoose/typegoose'
+import { pre, Prop, Ref, modelOptions } from '@typegoose/typegoose'
 import ObjectId = mongoose.Types.ObjectId
 import lib from '../utils/lib'
 import { Region } from './region.model'

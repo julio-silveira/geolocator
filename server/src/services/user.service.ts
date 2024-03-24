@@ -1,4 +1,3 @@
-import { NotFoundError } from '../errors/NotFoundError'
 import { UserModel } from '../models'
 import { UserSchema } from '../schemas/user.schemas'
 

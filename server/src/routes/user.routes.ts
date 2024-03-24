@@ -9,12 +9,14 @@ const model = UserModel
 const service = new UserService(model)
 const controller = new UserController(service)
 
-router.get('/users', controller.getUsers)
+const basePath = '/users'
 
-router.post('/users', controller.createUser)
+router.get(basePath, controller.getAll)
 
-router.get('/users/:id', controller.getUser)
+router.post(basePath, controller.create)
 
-router.put('/users/:id', controller.updateUser)
+router.get(`${basePath}/:id`, controller.getOne)
+
+router.put(`${basePath}/:id`, controller.update)
 
 export default router

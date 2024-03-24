@@ -1,16 +1,8 @@
 import 'reflect-metadata'
 
 import * as mongoose from 'mongoose'
-import { TimeStamps } from '@typegoose/typegoose/lib/defaultClasses'
-import {
-    pre,
-    getModelForClass,
-    Prop,
-    Ref,
-    modelOptions,
-} from '@typegoose/typegoose'
+import { pre, Prop, Ref, modelOptions } from '@typegoose/typegoose'
 import ObjectId = mongoose.Types.ObjectId
-import lib from '../utils/lib'
 import Base from './base.model'
 import { User } from './user.model'
 import { UserModel } from '.'
@@ -32,11 +24,14 @@ import { UserModel } from '.'
 })
 @modelOptions({ schemaOptions: { validateBeforeSave: false } })
 export class Region extends Base {
-    @Prop({ required: true, auto: true })
-    _id: string
-
     @Prop({ required: true })
     name!: string
+
+    @Prop({ required: true })
+    type: string
+
+    @Prop({ required: true, type: () => [[Number]]})
+    coordinates: number[][]
 
     @Prop({ ref: () => User, required: true, type: () => String })
     user: Ref<User>
