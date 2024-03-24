@@ -1,4 +1,4 @@
-import type { Request, } from 'express'
+import type { Request } from 'express'
 import { AnyZodObject, ZodError, z } from 'zod'
 import { BaseError } from '../errors/BaseError'
 import { HTTP_STATUS } from './httpStatus'

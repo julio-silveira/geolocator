@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import sinon from 'sinon'
 import { Request, Response, NextFunction } from 'express'
 import { BaseError } from '../errors/BaseError'
-import errorMiddleware from "./errors"
+import errorMiddleware from './errors'
 
 describe('Error Middleware', () => {
     let req: Partial<Request>
@@ -28,11 +28,13 @@ describe('Error Middleware', () => {
         errorMiddleware(baseError, req as Request, res as Response, next)
 
         expect((res.status as any).calledWith(400)).to.be.true
-        expect((res.json as any).calledWith({
-            message: 'Test BaseError',
-            errorCode: 'test_code',
-            error: undefined,
-        })).to.be.true
+        expect(
+            (res.json as any).calledWith({
+                message: 'Test BaseError',
+                errorCode: 'test_code',
+                error: undefined,
+            })
+        ).to.be.true
         expect(next.called).to.be.false
     })
 
@@ -42,11 +44,13 @@ describe('Error Middleware', () => {
         errorMiddleware(nonBaseError, req as Request, res as Response, next)
 
         expect((res.status as any).calledWith(500)).to.be.true
-        expect((res.json as any).calledWith({
-            message: 'Test Error',
-            errorCode: 'internal_server_error',
-            error: sinon.match.string,
-        })).to.be.true
+        expect(
+            (res.json as any).calledWith({
+                message: 'Test Error',
+                errorCode: 'internal_server_error',
+                error: sinon.match.string,
+            })
+        ).to.be.true
         expect(next.called).to.be.false
     })
 })

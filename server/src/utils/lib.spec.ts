@@ -21,13 +21,16 @@ describe('GeoLib', () => {
             const mockCoordinates = { lat: 40.7128, lng: -74.006 }
 
             geocoderMock.reverse.resolves([
-                { formattedAddress: 'New York, NY, USA' }
+                { formattedAddress: 'New York, NY, USA' },
             ])
 
-            const address = await geoLib.getAddressFromCoordinates(mockCoordinates)
+            const address =
+                await geoLib.getAddressFromCoordinates(mockCoordinates)
 
             expect(address).to.equal('New York, NY, USA')
-            expect(geocoderMock.reverse.calledWith({ lat: 40.7128, lon: -74.006 })).to.be.true
+            expect(
+                geocoderMock.reverse.calledWith({ lat: 40.7128, lon: -74.006 })
+            ).to.be.true
         })
 
         it('should throw BadRequestError if no address found', async () => {
@@ -39,7 +42,9 @@ describe('GeoLib', () => {
                 await geoLib.getAddressFromCoordinates(mockCoordinates)
             } catch (error) {
                 expect(error).to.be.an.instanceOf(BadRequestError)
-                expect(error.message).to.equal('Unable to get address from sent coordinates')
+                expect(error.message).to.equal(
+                    'Unable to get address from sent coordinates'
+                )
             }
         })
 
@@ -52,7 +57,9 @@ describe('GeoLib', () => {
                 await geoLib.getAddressFromCoordinates(mockCoordinates)
             } catch (error) {
                 expect(error).to.be.an.instanceOf(BadRequestError)
-                expect(error.message).to.equal('Unable to get address from sent coordinates')
+                expect(error.message).to.equal(
+                    'Unable to get address from sent coordinates'
+                )
             }
         })
     })
@@ -62,10 +69,11 @@ describe('GeoLib', () => {
             const mockAddress = 'New York, NY, USA'
 
             geocoderMock.geocode.resolves([
-                { latitude: 40.7128, longitude: -74.006 }
+                { latitude: 40.7128, longitude: -74.006 },
             ])
 
-            const coordinates = await geoLib.getCoordinatesFromAddress(mockAddress)
+            const coordinates =
+                await geoLib.getCoordinatesFromAddress(mockAddress)
 
             expect(coordinates).to.deep.equal({ lat: 40.7128, lng: -74.006 })
             expect(geocoderMock.geocode.calledWith(mockAddress)).to.be.true

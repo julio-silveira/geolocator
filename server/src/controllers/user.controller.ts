@@ -41,9 +41,7 @@ export default class UserController {
 
     getOne = async (req: Request, res: Response) => {
         const { id } = req.params
-
         const user = await this.userService.getUser(id)
-
         if (!user) {
             throw new NotFoundError('User not found')
         }
@@ -60,7 +58,7 @@ export default class UserController {
         const isRegisteredUser = await this.userService.getUser(id)
 
         if (!isRegisteredUser) {
-            throw new BadRequestError('User not found')
+            throw new NotFoundError('User not found')
         }
 
         const userWithEmail = await this.userService.getUserByEmail(body.email)

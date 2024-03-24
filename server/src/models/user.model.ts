@@ -7,10 +7,14 @@ import Base from './base.model'
 
 @pre<User>('save', async function (next) {
     const user = this as Omit<any, keyof User> & User
+
+    if (user?.address && user?.coordinates) {
+        next()
+    }
+
     if (user?.coordinates && user.isModified('coordinates')) {
         user.address = await lib.getAddressFromCoordinates(user.coordinates)
     } else if (user.isModified('address')) {
-        console.log(user)
         const { lat, lng } = await lib.getCoordinatesFromAddress(user.address)
 
         user.coordinates = [lng, lat]
@@ -29,7 +33,7 @@ export class User extends Base {
     @Prop({ required: true })
     address: string
 
-    @Prop({ required: true, type: () => [Number], index: '2dsphere' })
+    @Prop({ required: true, type: () => [Number] })
     coordinates: [number, number]
 
     @Prop({
