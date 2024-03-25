@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker'
 
 describe('RegionController', () => {
     let regionServiceMock
+    let userServiceMock
     let regionController: RegionController
 
     beforeEach(() => {
@@ -20,10 +21,16 @@ describe('RegionController', () => {
             delete: sinon.stub(),
         }
 
-        regionController = new RegionController(regionServiceMock)
+        userServiceMock = {
+            getUser: sinon.stub(),
+        }
+
+        regionController = new RegionController(regionServiceMock, userServiceMock)
     })
 
     it('should create a region', async () => {
+
+
         const req = {
             body: {
                 name: 'Test Region',
@@ -45,6 +52,7 @@ describe('RegionController', () => {
         } as unknown as Response
 
         regionServiceMock.create.resolves({ name: 'Test Region' })
+        userServiceMock.getUser.resolves({ name: 'Test User' })
 
         await regionController.create(req, res)
 

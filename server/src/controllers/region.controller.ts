@@ -10,12 +10,20 @@ import {
     updateRegionSchema,
 } from '../schemas/region.schema'
 import { NotFoundError } from "../errors/NotFoundError"
+import UserService from "../services/user.service"
 
 export default class RegionController {
-    constructor(private readonly regionService: RegionService) {}
+    constructor(private readonly regionService: RegionService,
+      private readonly userService: UserService) {}
 
     create = async (req: Request, res: Response) => {
         const { body } = await zodParser(createRegionSchema, req)
+
+          const user = await this.userService.getUser(body.user)
+
+          if (!user) {
+              throw new NotFoundError('User not found')
+          }
 
         const newUser = await this.regionService.create(body)
 
@@ -90,6 +98,14 @@ export default class RegionController {
             body,
             params: { id },
         } = await zodParser(updateRegionSchema, req)
+
+        if (body.user) {
+            const user = await this.userService.getUser(body.user)
+
+            if (!user) {
+                throw new NotFoundError('User not found')
+            }
+        }
 
         const isRegisteredRegion = await this.regionService.getOne(id)
 

@@ -1,8 +1,8 @@
 FROM node:20-alpine
 
-WORKDIR /api 
+WORKDIR /api
 
-COPY package.json ./ 
+COPY package.json ./
 
 COPY yarn.lock ./
 

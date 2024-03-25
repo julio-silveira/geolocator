@@ -4,7 +4,6 @@ services:
     api:
         container_name: api
         build: .
-        working_dir: /api
         volumes:
             - ./src:/src
         ports:
@@ -24,11 +23,11 @@ services:
         env_file:
             - .env
         ports:
-            - ${DB_PORT}:${DB_PORT}
+            - 27017:27017
         volumes:
             - mongodb_data_container:/data/db
         healthcheck:
-            test: echo 'db.runCommand("ping").ok' | mongo mongo:${DB_PORT} --quiet
+            test: echo 'db.runCommand("ping").ok' | mongo mongo:27017 --quiet
             timeout: 10s
             retries: 5
             start_period: 40s

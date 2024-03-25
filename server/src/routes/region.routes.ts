@@ -2,12 +2,15 @@ import { Router } from 'express'
 import { RegionModel, UserModel } from '../models'
 import RegionService from '../services/region.service'
 import RegionController from '../controllers/region.controller'
+import UserService from "../services/user.service"
 
 const router = Router()
 
 const model = RegionModel
+const userModel = UserModel
 const service = new RegionService(model)
-const controller = new RegionController(service)
+const userService = new UserService(userModel)
+const controller = new RegionController(service, userService)
 
 const basePath = '/regions'
 
