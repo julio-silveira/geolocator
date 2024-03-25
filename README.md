@@ -29,9 +29,7 @@ E aguarde os containeres ficarem de pé e em seguida pode testar a aplicação!
 
 ### Testando a API
 
-Na pasta collections/ tem um arquivo com a coleção pronta para ser importada no postman, após importar basta se autenticar para obter o token e utilizar este token para acessar as rotas protegidas.
-
-Os endpoints disponíveis na api podem ser encontrados a acessando o caminho `/api-docs`
+Na pasta collections/ tem um arquivo com a coleção pronta para ser importada no postman, além disso, endpoints disponíveis na api podem ser encontrados a acessando o caminho `/api-docs` com a aplicação no ar.
 
 Já para rodar os testes automatizados, na pastar /server, execute o comando `yarn` para instalar os pacotes necessários e em seguida execute `yarn test` e aguarde  a execução da suite de testes.
 
