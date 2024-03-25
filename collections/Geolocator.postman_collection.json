@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "fc821a53-60d0-4c84-93c1-e8cbb8122fda",
+		"name": "Geolocator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29596147"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/users/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "660063fec425d1e00ba5a6d0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"name\": \"{{$randomUserName}}\",\r\n    \"email\": \"{{$randomEmail}}\",\r\n    // \"address\": \"{{$randomStreetAddress}}\"\r\n    \"coordinates\": {\r\n        \"latitude\": 45.767,\r\n        \"longitude\": 4.833\r\n    }\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    // \"name\": \"{{$randomUserName}}\",\r\n    // \"email\": \"{{$randomEmail}}\",\r\n    \"address\": \"{{$randomStreetAddress}}\"\r\n    // \"coordinates\": {\r\n    //     \"latitude\": 45.767,\r\n    //     \"longitude\": 4.833\r\n    // }\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "6600bc6f0f7481e8edd0b86b"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    // \"name\": \"{{$randomUserName}}\",\r\n    // \"email\": \"{{$randomEmail}}\",\r\n    // \"email\": \"Marjoray.Smith59@gmail.com\",\r\n    // \"address\": \"mogeiro pb\"\r\n    // \"coordinates\": {\r\n    //     \"latitude\": 45.767,\r\n    //     \"longitude\": 4.833\r\n    // }\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/:userId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								":userId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "6600bc6f0f7481e8edd0b86b"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Regions",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/regions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    // \"name\": \"{{$randomUserName}}\",\r\n    // \"email\": \"{{$randomEmail}}\",\r\n    // \"email\": \"Marjoray.Smith59@gmail.com\",\r\n    \"address\": \"mogeiro pb\"\r\n    // \"coordinates\": {\r\n    //     \"latitude\": 45.767,\r\n    //     \"longitude\": 4.833\r\n    // }\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/regions/:regionsId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions",
+								":regionsId"
+							],
+							"variable": [
+								{
+									"key": "regionsId",
+									"value": "6600652e550894981c8f0714"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByPoint",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    // \"name\": \"{{$randomUserName}}\",\r\n    // \"email\": \"{{$randomEmail}}\",\r\n    // \"email\": \"Marjoray.Smith59@gmail.com\",\r\n    \"address\": \"mogeiro pb\"\r\n    // \"coordinates\": {\r\n    //     \"latitude\": 45.767,\r\n    //     \"longitude\": 4.833\r\n    // }\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/regions/by-point/?latitude=1&longitude=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions",
+								"by-point",
+								""
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "1"
+								},
+								{
+									"key": "longitude",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByDistance",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    // \"name\": \"{{$randomUserName}}\",\r\n    // \"email\": \"{{$randomEmail}}\",\r\n    // \"email\": \"Marjoray.Smith59@gmail.com\",\r\n    \"address\": \"mogeiro pb\"\r\n    // \"coordinates\": {\r\n    //     \"latitude\": 45.767,\r\n    //     \"longitude\": 4.833\r\n    // }\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/regions/by-distance/?latitude=1&longitude=1&distance=1000000&userToExclude=660063fec425d1e00ba5a6d0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions",
+								"by-distance",
+								""
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "1"
+								},
+								{
+									"key": "longitude",
+									"value": "1"
+								},
+								{
+									"key": "distance",
+									"value": "1000000"
+								},
+								{
+									"key": "userToExclude",
+									"value": "660063fec425d1e00ba5a6d0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomWord}}\",\r\n    \"type\": \"Polygon\",\r\n    \"coordinates\": [\r\n        [\r\n            [\r\n                1,\r\n                1\r\n            ],\r\n            [\r\n                -1,\r\n                -1\r\n            ],\r\n            [\r\n                -2,\r\n                -2\r\n            ],\r\n            [\r\n                1,\r\n                1\r\n            ]\r\n        ]\r\n    ],\r\n    \"user\": \"6600bcb70f7481e8edd0b872\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/regions/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"name\": \"{{$randomWord}}\",\r\n    \"type\": \"Polygon\",\r\n    \"coordinates\":[ [\r\n        [1,1],\r\n        [3,3],\r\n        [5,5],\r\n        [1,1]\r\n    ]]\r\n//    \"user\": \"6600bcb70f7481e8edd0b872\"\r\n}\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/regions/:regionId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions",
+								":regionId"
+							],
+							"variable": [
+								{
+									"key": "regionId",
+									"value": "6600bd0f0f7481e8edd0b887"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/regions/:regionId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"regions",
+								":regionId"
+							],
+							"variable": [
+								{
+									"key": "regionId",
+									"value": "66006418c425d1e00ba5a6d3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

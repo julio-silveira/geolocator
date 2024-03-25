@@ -1,38 +1,37 @@
-version: "3.8"
-name: "geolocation"
+version: '3.8'
+name: 'geolocation'
 services:
-  api:
-    container_name: api
-    build: .
-    working_dir: /api
-    volumes:
-      - ./src:/src
-    ports:
-      - ${API_PORT}:${API_PORT}
-    env_file:
-      - .env
-    depends_on:
-      - db
-    healthcheck:
-      test: ["CMD", "lsof", "-t", "-i:${API_PORT}"]
-      timeout: 10s
-      retries: 5
+    api:
+        container_name: api
+        build: .
+        volumes:
+            - ./src:/src
+        ports:
+            - ${API_PORT}:${API_PORT}
+        env_file:
+            - .env
+        depends_on:
+            - db
+        healthcheck:
+            test: ['CMD', 'lsof', '-t', '-i:${API_PORT}']
+            timeout: 10s
+            retries: 5
 
-  db:
-    container_name: db
-    image: mongo:latest
-    env_file:
-      - .env
-    ports:
-      - ${DB_PORT}:${DB_PORT}
-    volumes:
-      - mongodb_data_container:/data/db
-    healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo mongo:${DB_PORT} --quiet
-      timeout: 10s
-      retries: 5
-      start_period: 40s
-    restart: "always"
+    db:
+        container_name: db
+        image: mongo:latest
+        env_file:
+            - .env
+        ports:
+            - 27017:27017
+        volumes:
+            - mongodb_data_container:/data/db
+        healthcheck:
+            test: echo 'db.runCommand("ping").ok' | mongo mongo:27017 --quiet
+            timeout: 10s
+            retries: 5
+            start_period: 40s
+        restart: 'always'
 
 volumes:
-  mongodb_data_container:
+    mongodb_data_container:

@@ -1,0 +1,734 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Geolocator Api",
+    "description": "API for users and regions management",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Lista todos os usuários",
+        "description": "Lista todos os usuários cadastrados no sistema.",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Usuários obtidos com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Users"],
+        "summary": "Cria um novo usuário",
+        "description": "Cria um novo usuário no sistema",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                      "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Validation failed"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "validation_error"
+                    },
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "You need provide address OR coordinates, neither both or none of them"
+                          },
+                          "path": {
+                            "type": "string",
+                            "example": "body"
+                          }
+                        }
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Obtém um usuário pelo id",
+        "description": "Retorna um usuário",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário obtido com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuário não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "not_found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Atualiza um usuário pelo id",
+        "description": "Atualiza um usuário",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário atualizado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhum usuário cadastrado com o id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "not_found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Deleta um usuário pelo id",
+        "description": "Deleta um usuário",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID do usuário",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário deletado com sucesso"
+          },
+          "404": {
+            "description": "Nenhum usuário cadastrado com o id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User not found"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "not_found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/regions": {
+      "get": {
+        "tags": ["Regions"],
+        "summary": "Lista todas as regiões",
+        "description": "Lista todas as regiões cadastradas no sistema.",
+        "produces": ["application/json"],
+
+        "responses": {
+          "200": {
+            "description": "Regiões obtidas com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "rows": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Region"
+                      }
+                    },
+                    "total": {
+                      "type": "number",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Regions"],
+        "summary": "Cria uma nova região",
+        "description": "Cria uma nova região no sistema",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegionCreateUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Região criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "$ref": "#/components/schemas/Region"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/regions/{id}": {
+      "get": {
+        "tags": ["Regions"],
+        "summary": "Obtém uma região pelo id",
+        "description": "Retorna uma região",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID da região",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Região obtida com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "$ref": "#/components/schemas/Region" }
+
+              }
+            }
+          },
+          "404": {
+            "description": "Região não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Region not found"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "not_found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Regions"],
+        "summary": "Atualiza uma região pelo id",
+        "description": "Atualiza uma região",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID da região",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegionCreateUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Região atualizada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Region"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Nenhuma região cadastrada com o id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Region not found"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "not_found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Regions"],
+        "summary": "Deleta uma região pelo id",
+        "description": "Deleta uma região",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "ID da região",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Região deletada com sucesso"
+          },
+          "404": {
+            "description": "Nenhuma região cadastrada com o id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Region not found"
+                    },
+                    "errorCode": {
+                      "type": "string",
+                      "example": "not_found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/regions/by-point": {
+      "get": {
+        "tags": ["Regions"],
+        "summary": "Obtem regiões que possuiem o ponto informado",
+        "description": "Retonar regiões que possuem o ponto informado",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "description": "Latitude do ponto de referência",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "description": "Longitude do ponto de referência",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Região obtida com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "type": "array", "items": { "$ref": "#/components/schemas/Region" } }
+
+              }
+            }
+          }
+        }
+      }
+    },
+    "/regions/by-distance": {
+      "get": {
+        "tags": ["Regions"],
+        "summary": "Obtém regiões em um raio de distância",
+        "description": "Retonar regiões em um raio de distância a partir das coordenadas informadas e também podendo filtra-las por usuário",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "description": "Latitude do ponto de referência",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "description": "Longitude do ponto de referência",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "distance",
+            "description": "Distância máxima em metros",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "userToExclude",
+            "description": "ID do usuário para excluir da busca",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Regiões obtidas com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                   "type": "array",
+                   "items": { "$ref": "#/components/schemas/Region" } }
+                }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "enum": ["longitude", "latitude"]
+            }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "__v": {
+            "type": "integer"
+          }
+        }
+      },
+      "UserCreateUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "João da Silva"
+          },
+          "email": {
+            "type": "string",
+            "example": "joaodasilva@email.com",
+            "format": "email"
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "coordinates": {
+                "type": "object",
+                "properties": {
+                  "lng": {
+                    "type": "number",
+                    "example": -1,
+                    "required": true
+                  },
+                  "lat": {
+                    "type": "number",
+                    "example": -2,
+                    "required": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "address": {
+                "type": "string",
+                "example": "Rua das flores, 123"
+              }
+            }
+          }
+        ],
+        "required": ["name", "email"]
+      },
+      "Region": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "example": "Polygon"
+              },
+              "coordinates": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "enum": ["longitude", "latitude"],
+                      "example": [[[1,2] , [3,4], [5,6], [1,2]]]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "string",
+            "description": "ID do usuário que criou a região",
+            "example": "5f9c0e9b1c9d440000d1b3d1"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "__v": {
+            "type": "integer"
+          }
+        }
+      },
+      "RegionCreateUpdate": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Região 1"
+          },
+          "type": {
+            "type": "string",
+            "example": "Polygon"
+          },
+          "coordinates": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "enum": ["longitude", "latitude"],
+                  "example": [[[1,2] , [3,4], [5,6], [1,2]]]
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "string",
+            "description": "ID do usuário que criou a região",
+            "example": "5f9c0e9b1c9d440000d1b3d1"
+          }
+        },
+        "required": ["name", "type","coordinates", "user"]
+      }
+    }
+  }
+}

@@ -1,34 +1,56 @@
 {
-  "name": "geolocator",
-  "version": "0.0.1",
-  "description": "geolocator",
-  "main": "index.js",
-  "scripts": {
-    "dev": "nodemon index.ts",
-    "test": "mocha --require ts-node/register ./src/**/*.spec.ts --exit"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@faker-js/faker": "^8.1.0",
-    "@typegoose/typegoose": "^11.5.0",
-    "chai": "^4.3.10",
-    "express": "^4.18.2",
-    "mongoose": "^7.5.3"
-  },
-  "devDependencies": {
-    "@types/chai": "^4.3.6",
-    "@types/express": "^4.17.18",
-    "@types/mocha": "^10.0.2",
-    "@types/node": "^20.8.0",
-    "@types/reflect-metadata": "^0.1.0",
-    "@types/sinon": "^10.0.17",
-    "@types/supertest": "^2.0.13",
-    "mocha": "^10.2.0",
-    "nodemon": "^3.0.1",
-    "sinon": "^16.0.0",
-    "supertest": "^6.3.3",
-    "ts-node": "^10.9.1",
-    "typescript": "^5.2.2"
-  }
+    "name": "geolocator",
+    "version": "0.0.1",
+    "description": "geolocator",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon src/server.ts",
+        "test": "mocha --require ts-node/register ./src/**/*.spec.ts --exit",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write .",
+        "lint:check": "eslint .",
+        "lint:fix": "eslint --fix ."
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@faker-js/faker": "^8.1.0",
+        "@typegoose/typegoose": "^11.5.0",
+        "chai": "^4.3.10",
+        "dotenv": "^16.4.5",
+        "express": "^4.18.2",
+        "express-async-errors": "^3.1.1",
+        "express-winston": "^4.2.0",
+        "mongodb-memory-server": "^9.1.7",
+        "mongoose": "^7.5.3",
+        "node-geocoder": "^4.3.0",
+        "sinon-chai": "^3.7.0",
+        "swagger-ui-express": "^5.0.0",
+        "winston": "^3.13.0",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@types/chai": "^4.3.6",
+        "@types/express": "^4.17.18",
+        "@types/mocha": "^10.0.2",
+        "@types/node": "^20.8.0",
+        "@types/node-geocoder": "^4.2.6",
+        "@types/reflect-metadata": "^0.1.0",
+        "@types/sinon": "^10.0.17",
+        "@types/sinon-chai": "^3.2.12",
+        "@types/supertest": "^2.0.13",
+        "@types/swagger-ui-express": "^4.1.6",
+        "@types/winston": "^2.4.4",
+        "@typescript-eslint/eslint-plugin": "^7.3.1",
+        "@typescript-eslint/parser": "^7.3.1",
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "mocha": "^10.2.0",
+        "nodemon": "^3.0.1",
+        "prettier": "^3.2.5",
+        "sinon": "^16.0.0",
+        "supertest": "^6.3.3",
+        "ts-node": "^10.9.1",
+        "typescript": "^5.2.2"
+    }
 }
